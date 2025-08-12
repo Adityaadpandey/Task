@@ -3,10 +3,10 @@ import { apiContract } from "@boilerplate/openapi/contracts";
 import { useAuth } from "@clerk/clerk-react";
 import { initClient } from "@ts-rest/core";
 import axios, {
-  type Method,
   AxiosError,
   isAxiosError,
   type AxiosResponse,
+  type Method,
 } from "axios";
 
 type Headers = Awaited<
