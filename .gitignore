@@ -13,7 +13,8 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-tmp/
+
+.DS_Store
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
@@ -22,5 +23,36 @@ tmp/
 go.work
 go.work.sum
 
-# env file
+# Project-specific
+config.toml
+
+# Editors
+.idea
+
+# Dev
+tmp/*
+
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build Outputs
+out/
+build
+dist
+tmp
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+.DS_Store
+*.pem
+
+tsconfig.tsbuildinfo
 .env
+.turbo
+.vscode

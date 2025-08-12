@@ -1,236 +1,158 @@
-# Go Boilerplate Backend
+# Go Boilerplate
 
-A production-ready Go backend service built with Echo framework, featuring clean architecture, comprehensive middleware, and modern DevOps practices.
-
-## Architecture Overview
-
-This backend follows clean architecture principles with clear separation of concerns:
-
-```
-backend/
-├── cmd/go-boilerplate/        # Application entry point
-├── internal/                  # Private application code
-│   ├── config/               # Configuration management
-│   ├── database/             # Database connections and migrations
-│   ├── handler/              # HTTP request handlers
-│   ├── service/              # Business logic layer
-│   ├── repository/           # Data access layer
-│   ├── model/                # Domain models
-│   ├── middleware/           # HTTP middleware
-│   ├── lib/                  # Shared libraries
-│   └── validation/           # Request validation
-├── static/                   # Static files (OpenAPI spec)
-├── templates/                # Email templates
-└── Taskfile.yml              # Task automation
-```
+A production-ready monorepo template for building scalable web applications with Go backend and TypeScript frontend. Built with modern best practices, clean architecture, and comprehensive tooling.
 
 ## Features
 
-### Core Framework
-- **Echo v4**: High-performance, minimalist web framework
-- **Clean Architecture**: Handlers → Services → Repositories → Models
-- **Dependency Injection**: Constructor-based DI for testability
+- **Monorepo Structure**: Organized with Turborepo for efficient builds and development
+- **Go Backend**: High-performance REST API with Echo framework
+- **Authentication**: Integrated Clerk SDK for secure user management
+- **Database**: PostgreSQL with migrations and connection pooling
+- **Background Jobs**: Redis-based async job processing with Asynq
+- **Observability**: New Relic APM integration and structured logging
+- **Email Service**: Transactional emails with Resend and HTML templates
+- **Testing**: Comprehensive test infrastructure with Testcontainers
+- **API Documentation**: OpenAPI/Swagger specification
+- **Security**: Rate limiting, CORS, secure headers, and JWT validation
 
-### Database
-- **PostgreSQL**: Primary database with pgx/v5 driver
-- **Migration System**: Tern for schema versioning
-- **Connection Pooling**: Optimized for production workloads
-- **Transaction Support**: ACID compliance for critical operations
+## Project Structure
 
-### Authentication & Security
-- **Clerk Integration**: Modern authentication service
-- **JWT Validation**: Secure token verification
-- **Role-Based Access**: Configurable permission system
-- **Rate Limiting**: 20 requests/second per IP
-- **Security Headers**: XSS, CSRF, and clickjacking protection
+```
+go-boilerplate/
+├── apps/backend/          # Go backend application
+├── packages/         # Frontend packages (React, Vue, etc.)
+├── package.json      # Monorepo configuration
+├── turbo.json        # Turborepo configuration
+└── README.md         # This file
+```
 
-### Observability
-- **New Relic APM**: Application performance monitoring
-- **Structured Logging**: JSON logs with Zerolog
-- **Request Tracing**: Distributed tracing support
-- **Health Checks**: Readiness and liveness endpoints
-- **Custom Metrics**: Business-specific monitoring
-
-### Background Jobs
-- **Asynq**: Redis-based distributed task queue
-- **Priority Queues**: Critical, default, and low priority
-- **Job Scheduling**: Cron-like task scheduling
-- **Retry Logic**: Exponential backoff for failed jobs
-- **Job Monitoring**: Real-time job status tracking
-
-### Email Service
-- **Resend Integration**: Reliable email delivery
-- **HTML Templates**: Beautiful transactional emails
-- **Preview Mode**: Test emails in development
-- **Batch Sending**: Efficient bulk operations
-
-### API Documentation
-- **OpenAPI 3.0**: Complete API specification
-- **Swagger UI**: Interactive API explorer
-- **Auto-generation**: Code-first approach
-
-## Getting Started
+## Quick Start
 
 ### Prerequisites
-- Go 1.24+
+
+- Go 1.24 or higher
+- Node.js 22+ and Bun
 - PostgreSQL 16+
 - Redis 8+
-- Task (taskfile.dev)
 
 ### Installation
 
-1. Install dependencies:
+1. Clone the repository:
 ```bash
+git clone https://github.com/sriniously/go-boilerplate.git
+cd go-boilerplate
+```
+
+2. Install dependencies:
+```bash
+# Install frontend dependencies
+bun install
+
+# Install backend dependencies
+cd apps/backend
 go mod download
 ```
 
-2. Set up environment:
+3. Set up environment variables:
 ```bash
-cp .env.example .env
-# Configure your environment variables
+cp apps/backend/.env.example apps/backend/.env
+# Edit apps/backend/.env with your configuration
 ```
 
-3. Run migrations:
+4. Start the database and Redis.
+
+5. Run database migrations:
 ```bash
+cd apps/backend
 task migrations:up
 ```
 
-4. Start the server:
+6. Start the development server:
 ```bash
+# From root directory
+bun dev
+
+# Or just the backend
+cd apps/backend
 task run
 ```
 
-## Configuration
-
-Configuration is managed through environment variables with the `BOILERPLATE_` prefix:
+The API will be available at `http://localhost:8080`
 
 ## Development
 
-### Available Tasks
+### Available Commands
 
 ```bash
-task help                    # Show all available tasks
-task run                     # Run the application
-task test                    # Run tests
-task migrations:new name=X   # Create new migration
-task migrations:up           # Apply migrations
-task migrations:down         # Rollback last migration
-task tidy                    # Format and tidy dependencies
+# Backend commands (from backend/ directory)
+task help              # Show all available tasks
+task run               # Run the application
+task migrations:new    # Create a new migration
+task migrations:up     # Apply migrations
+task test              # Run tests
+task tidy              # Format code and manage dependencies
+
+# Frontend commands (from root directory)
+bun dev                # Start development servers
+bun build              # Build all packages
+bun lint               # Lint all packages
 ```
 
-### Project Structure
+### Environment Variables
 
-#### Handlers (`internal/handler/`)
-HTTP request handlers that:
-- Parse and validate requests
-- Call appropriate services
-- Format responses
-- Handle HTTP-specific concerns
+The backend uses environment variables prefixed with `BOILERPLATE_`. Key variables include:
 
-#### Services (`internal/service/`)
-Business logic layer that:
-- Implements use cases
-- Orchestrates operations
-- Enforces business rules
-- Handles transactions
+- `BOILERPLATE_DATABASE_*` - PostgreSQL connection settings
+- `BOILERPLATE_SERVER_*` - Server configuration
+- `BOILERPLATE_AUTH_*` - Authentication settings
+- `BOILERPLATE_REDIS_*` - Redis connection
+- `BOILERPLATE_EMAIL_*` - Email service configuration
+- `BOILERPLATE_OBSERVABILITY_*` - Monitoring settings
 
-#### Repositories (`internal/repository/`)
-Data access layer that:
-- Encapsulates database queries
-- Provides data mapping
-- Handles database-specific logic
-- Supports multiple data sources
+See `apps/backend/.env.example` for a complete list.
 
-#### Models (`internal/model/`)
-Domain entities that:
-- Define core business objects
-- Include validation rules
-- Remain database-agnostic
+## Architecture
 
-#### Middleware (`internal/middleware/`)
-Cross-cutting concerns:
-- Authentication/Authorization
-- Request logging
-- Error handling
-- Rate limiting
-- CORS
-- Security headers
+This boilerplate follows clean architecture principles:
 
-### Testing
+- **Handlers**: HTTP request/response handling
+- **Services**: Business logic implementation
+- **Repositories**: Data access layer
+- **Models**: Domain entities
+- **Infrastructure**: External services (database, cache, email)
 
-#### Unit Tests
+## Testing
+
 ```bash
+# Run backend tests
+cd apps/backend
 go test ./...
+
+# Run with coverage
+go test -cover ./...
+
+# Run integration tests (requires Docker)
+go test -tags=integration ./...
 ```
 
-## Logging
+### Production Considerations
 
-Structured logging with Zerolog:
-
-```go
-log.Info().
-    Str("user_id", userID).
-    Str("action", "login").
-    Msg("User logged in successfully")
-```
-
-Log levels:
-- `debug`: Detailed debugging information
-- `info`: General informational messages
-- `warn`: Warning messages
-- `error`: Error messages
-- `fatal`: Fatal errors that cause shutdown
-
-### Production Checklist
-
-- [ ] Set production environment variables
-- [ ] Enable SSL/TLS
-- [ ] Configure production database
-- [ ] Set up monitoring alerts
-- [ ] Configure log aggregation
-- [ ] Enable rate limiting
-- [ ] Set up backup strategy
-- [ ] Configure auto-scaling
-- [ ] Implement graceful shutdown
-- [ ] Set up CI/CD pipeline
-
-## Performance Optimization
-
-### Database
-- Connection pooling configured
-- Prepared statements for frequent queries
-- Indexes on commonly queried fields
-- Query optimization with EXPLAIN ANALYZE
-
-### Caching
-- Redis for session storage
-- In-memory caching for hot data
-- HTTP caching headers
-
-### Concurrency
-- Goroutine pools for parallel processing
-- Context-based cancellation
-- Proper mutex usage
-
-## Security Best Practices
-
-1. **Input Validation**: All inputs validated and sanitized
-2. **SQL Injection**: Parameterized queries only
-3. **XSS Protection**: Output encoding and CSP headers
-4. **CSRF Protection**: Token-based protection
-5. **Rate Limiting**: Per-IP and per-user limits
-6. **Secrets Management**: Environment variables, never in code
-7. **HTTPS Only**: Enforce TLS in production
-8. **Dependency Scanning**: Regular vulnerability checks
+1. Use environment-specific configuration
+2. Enable production logging levels
+3. Configure proper database connection pooling
+4. Set up monitoring and alerting
+5. Use a reverse proxy (nginx, Caddy)
+6. Enable rate limiting and security headers
+7. Configure CORS for your domains
 
 ## Contributing
 
-1. Follow Go best practices and idioms
-2. Write tests for new features
-3. Update documentation
-4. Run linters before committing
-5. Keep commits atomic and well-described
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-See the parent project's LICENSE file.
+This project is licensed under the MIT License - see the LICENSE file for details.
