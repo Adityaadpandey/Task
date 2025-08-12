@@ -7,8 +7,8 @@ import (
 
 // -----------------------------------------------------------------
 type AddCommentPayload struct {
-	TodoID  string `json:"todoId" validate:"required,uuid"`
-	Content string `json:"content" validate:"required,min=1,max=1000"`
+	TodoID  uuid.UUID `json:"todoId" validate:"required,uuid"`
+	Content string    `json:"content" validate:"required,min=1,max=1000"`
 }
 
 func (p *AddCommentPayload) Validate() error {
@@ -31,7 +31,7 @@ func (p *GetCommentsByTodoIDPayload) Validate() error {
 
 type UpdateCommentPayload struct {
 	ID      uuid.UUID `param:"id" validate:"required,uuid"`
-	Content *string   `json:"content" validate:"omitempty,min=1,max=1000"`
+	Content string    `json:"content" validate:"omitempty,min=1,max=1000"`
 }
 
 func (p *UpdateCommentPayload) Validate() error {
