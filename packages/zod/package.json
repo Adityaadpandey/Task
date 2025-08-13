@@ -1,5 +1,5 @@
 {
-  "name": "@boilerplate/zod",
+  "name": "@tasker/zod",
   "version": "1.0.0",
   "description": "Package which exports all Boilerplate zod schemas and types",
   "type": "module",

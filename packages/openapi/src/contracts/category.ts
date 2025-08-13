@@ -1,7 +1,7 @@
-import { schemaWithPagination, ZTodoCategory } from "@boilerplate/zod";
+import { getSecurityMetadata } from "../utils.js";
+import { schemaWithPagination, ZTodoCategory } from "@tasker/zod";
 import { initContract } from "@ts-rest/core";
 import z from "zod";
-import { getSecurityMetadata } from "../utils.js";
 
 const c = initContract();
 

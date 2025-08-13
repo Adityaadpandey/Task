@@ -1,0 +1,20 @@
+[phases.setup]
+nixPkgs = ['nodejs_22', 'bun']
+aptPkgs = ['git']
+
+[phases.install]
+workDir = '/app'
+cmds = [
+    'bun install --frozen-lockfile',
+    'bun run build --filter=@tasker/openapi --filter=@tasker/zod'
+]
+
+[phases.build]
+workDir = '/app/apps/frontend'
+cmds = ['bun run build']
+
+[start]
+cmd = 'cd /app/apps/frontend && bun run start -- -l ${PORT:-3000}'
+
+[variables]
+NODE_ENV = 'production'

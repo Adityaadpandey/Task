@@ -1,11 +1,11 @@
 {
-  "name": "@boilerplate/emails",
+  "name": "@tasker/emails",
   "version": "1.0.0",
   "description": "Package to manage emails",
   "type": "module",
   "scripts": {
     "dev": "email dev --dir ./src/templates -p 3001",
-    "export": "email export --pretty --dir ./src/templates --outDir ../../apps/go-boilerplate/templates/emails"
+    "export": "email export --pretty --dir ./src/templates --outDir ../../apps/backend/templates/emails"
   },
   "keywords": [],
   "author": "",

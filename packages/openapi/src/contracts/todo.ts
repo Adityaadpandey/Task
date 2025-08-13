@@ -1,13 +1,13 @@
+import { getSecurityMetadata } from "../utils.js";
 import {
-    schemaWithPagination,
-    ZPopulatedTodo,
-    ZTodo,
-    ZTodoAttachment,
-    ZTodoStats,
-} from "@boilerplate/zod";
+  schemaWithPagination,
+  ZPopulatedTodo,
+  ZTodo,
+  ZTodoAttachment,
+  ZTodoStats,
+} from "@tasker/zod";
 import { initContract } from "@ts-rest/core";
 import z from "zod";
-import { getSecurityMetadata } from "../utils.js";
 
 const c = initContract();
 

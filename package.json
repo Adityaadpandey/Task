@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate",
+  "name": "tasker",
   "version": "1.0.0",
   "scripts": {
     "build": "turbo run build",

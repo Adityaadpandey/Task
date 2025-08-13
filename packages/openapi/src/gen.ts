@@ -20,7 +20,7 @@ const formattedDoc = JSON.parse(filteredDoc);
 
 const filePaths = [
   "./openapi.json",
-  "../../apps/go-boilerplate/static/openapi.json",
+  "../../apps/backend/static/openapi.json",
 ];
 
 filePaths.forEach((filePath) => {
